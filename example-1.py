@@ -41,4 +41,4 @@ for eleman1, eleman2 in zip(liste, listeSayac):
 
 for i in range(len(listeSayac)):
     if listeSayac[i] >= 5:
-        print(f"{liste[i]} : {listeSayac[i]}")
+        print(f"{liste[i]}:{listeSayac[i]}")
