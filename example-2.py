@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import openpyxl
 
-file_name = "excel.xlsx"
+file_name = "excel1000.xlsx"
 wb = openpyxl.load_workbook(filename=file_name, read_only=True)
 sheet = wb[wb.sheetnames[0]]
 database = np.array(pd.DataFrame(sheet.values))
@@ -35,7 +35,7 @@ del database
 
 counts = np.sum(dataMatrix, axis=0)
 
-minSupp = 5
+minSupp = 100
 
 I = np.nonzero(minSupp <= counts)[0]
 uniqueItems = [uniqueItems[i] for i in I]
