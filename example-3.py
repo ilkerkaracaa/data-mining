@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import openpyxl
+from pytictoc import TicToc
 
 file_name = "excel1000.xlsx"
 wb = openpyxl.load_workbook(filename=file_name, read_only=True)
@@ -36,6 +37,10 @@ del database
 counts = np.sum(dataMatrix, axis=0) / numOfTransactions
 
 minSupp = 100
+
+# Timer
+runTime = TicToc()
+runTime.tic()
 
 I = np.nonzero(minSupp <= counts)[0]
 uniqueItems = [uniqueItems[i] for i in I]
@@ -89,3 +94,6 @@ i = 0
 for FI, support in zip(F, S):
     i += 1
     print("#", i, " ", FI, "  supp.:", support)
+
+runTime.toc()
+print("Run time:", runTime.elapsed)
