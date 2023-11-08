@@ -3,14 +3,13 @@ import numpy as np
 import openpyxl
 from pytictoc import TicToc
 
-file_name = "excel1000.xlsx"
+file_name = "excel100.xlsx"
 wb = openpyxl.load_workbook(filename=file_name, read_only=True)
 sheet = wb[wb.sheetnames[0]]
 database = np.array(pd.DataFrame(sheet.values))
 wb.close()
 
 numOfTransactions = database.shape[0]
-
 
 allItems = []
 for i in range(0, numOfTransactions):
@@ -36,7 +35,7 @@ del database
 
 counts = np.sum(dataMatrix, axis=0) / numOfTransactions
 
-minSupp = 100
+minSupp = 0.2
 runTime = TicToc()
 runTime.tic()
 
@@ -54,13 +53,16 @@ for item in R:
 del dataMatrix
 
 
-def dfsLoop(item, R):
+def dfsLoop(item, R, tid, tidList):
     E = R[R.index(item[-1]) + 1 :]
     for suffix in E:
-        print(item + suffix)
-        dfsLoop(item + suffix, E)
+        suffixID = tid[R.index(suffix)]
+        ortakTid = list(set(tid).intersection(suffixID))
+        if minSupp <= len(ortakTid) / numOfTransactions:
+            print(item + suffix, len(ortakTid))
+            dfsLoop(item + suffix, E, ortakTid, tidList)
 
 
 for item, tid in zip(R, tidList):
     print(item, len(tid))
-    dfsLoop(item, R, tidList)
+    dfsLoop(item, R, tidList, tid)
