@@ -3,7 +3,7 @@ import numpy as np
 import openpyxl
 from pytictoc import TicToc
 
-file_name = "excel1000.xlsx"
+file_name = "excel100.xlsx"
 wb = openpyxl.load_workbook(filename=file_name, read_only=True)
 sheet = wb[wb.sheetnames[0]]
 database = np.array(pd.DataFrame(sheet.values))
@@ -97,3 +97,26 @@ for FI, support in zip(F, S):
 
 runTime.toc()
 print("Run time:", runTime.elapsed)
+
+print("------Kurallar Oluşturuluyor---------")
+#function to convert
+def listToString(s):
+    str1 = ""
+    return (str1.join(s))
+
+minconf = 0.80
+import itertools
+for frequentItemSet,supportXY in zip(F,S):
+    if len(frequentItemSet) > 1:
+        for L in range(1,len(frequentItemSet)):
+            for antecedent in itertools.combinations(frequentItemSet,L):
+                antecedent = list(antecedent)
+                consequent = list(set(frequentItemSet))
+                consequent.sort()
+                supportX = S[F.index(antecedent)]
+                supportY = S[F.index(consequent)]
+                confXY = supportXY/supportX
+                inteXY = abs(supportXY-supportX*supportY)
+                if minconf <= confXY:
+                    if 0 < inteXY:
+                        print(listToString(antecedent),'--->',listToString(consequent))
