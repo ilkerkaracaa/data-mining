@@ -3,7 +3,7 @@ import numpy as np
 import openpyxl
 from pytictoc import TicToc
 
-file_name = "excel100.xlsx"
+file_name = "excel.xlsx"
 wb = openpyxl.load_workbook(filename=file_name, read_only=True)
 sheet = wb[wb.sheetnames[0]]
 database = np.array(pd.DataFrame(sheet.values))
@@ -16,7 +16,7 @@ allItems = []
 for i in range(0, numOfTransactions):
     transaction = database[i, :]
     for item in transaction:
-        if item != None:
+        if item!=None:
             allItems.append(item)
 
 allItems = np.array(allItems)
@@ -36,7 +36,7 @@ del database
 
 counts = np.sum(dataMatrix, axis=0) / numOfTransactions
 
-minSupp = 100
+minSupp = 0.4
 
 # Timer
 runTime = TicToc()
@@ -104,7 +104,7 @@ def listToString(s):
     str1 = ""
     return (str1.join(s))
 
-minconf = 0.80
+minconf = 0.2
 import itertools
 for frequentItemSet,supportXY in zip(F,S):
     if len(frequentItemSet) > 1:
