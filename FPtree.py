@@ -127,7 +127,7 @@ def PlotTree(NODES, TREEITEMS, COUNTS, SingleItems):
 
 def update(NewItem,spprt,FREQUENTITEMSETS,SUPPORTS):
     FREQUENTITEMSETS.append(NewItem)
-    SUPPORTS.appedn(spprt)
+    SUPPORTS.append(spprt)
     return FREQUENTITEMSETS,SUPPORTS
 #--------------------------------------------------------------------------------
 def ConStructTree(DATABASE,OCCS,SingleItems,MinAbsSupp):
